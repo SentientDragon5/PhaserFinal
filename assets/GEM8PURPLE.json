@@ -1,0 +1,92 @@
+{"frames": {
+
+"GEM8PURPLE_0_0.png":
+{
+	"frame": {"x":0,"y":0,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_1_0.png":
+{
+	"frame": {"x":0,"y":23,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_2_0.png":
+{
+	"frame": {"x":0,"y":46,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_3_0.png":
+{
+	"frame": {"x":0,"y":69,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_4_0.png":
+{
+	"frame": {"x":0,"y":92,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_5_0.png":
+{
+	"frame": {"x":0,"y":115,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_6_0.png":
+{
+	"frame": {"x":0,"y":138,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_7_0.png":
+{
+	"frame": {"x":0,"y":161,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_8_0.png":
+{
+	"frame": {"x":0,"y":184,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+},
+"GEM8PURPLE_9_0.png":
+{
+	"frame": {"x":0,"y":207,"w":26,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":23},
+	"sourceSize": {"w":26,"h":23}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "GEM8PURPLE.png",
+	"format": "RGBA8888",
+	"size": {"w":26,"h":230},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9725741cb5fe8c9db806744b5889d497:074787a83dc0afe6aac220532f94bd98:ce32c02e412363200084b2256871cac1$"
+}
+}
