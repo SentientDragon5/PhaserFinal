@@ -24,6 +24,7 @@ let config = {
     width: canvas_x,
     height: canvas_y,
     fps:30,
+    backgroundColor: '#94b8d6',
     scene: [Load, Game, Win],
     audio: {
         disableWebAudio: true

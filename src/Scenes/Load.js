@@ -7,11 +7,15 @@ class Load extends Phaser.Scene {
         this.load.setPath("./assets/");
 
         // Load characters spritesheet
-        this.load.atlas("Hero_Knight_2", "Hero_Knight_2.png", "Hero_Knight_2.json");
+        this.load.atlas("Hero_Knight", "Hero_Knight.png", "Hero_Knight.json");
+
+        this.load.atlas("GEM8PURPLE", "GEM8PURPLE.png", "GEM8PURPLE.json");
+        this.load.atlas("Dimensional_Portal", "Dimensional_Portal.png", "Dimensional_Portal.json");
+
 
         // Load tilemap information
-        this.load.image("tilemap_packed", "Dungeon Ruins Tileset Night.png");                         // Packed tilemap
-        this.load.tilemapTiledJSON("tilemap_tiled", "ruins_map.tmj");   // Tilemap in JSON
+        this.load.image("tilemap_packed", "Dungeon Ruins Tileset Day.png");                         // Packed tilemap
+        this.load.tilemapTiledJSON("tilemap_tiled", "ruins_map2.tmj");   // Tilemap in JSON
 
         // this.load.image("particles", "particles.png");  
         // this.load.atlas("particles", "particles.png", "particles.json");
@@ -22,14 +26,14 @@ class Load extends Phaser.Scene {
         });
     }
 
-    createAnim(character, anim, animName, frames, loop=-1){
+    createAnim(character, anim, animName, frames,end=".png", loop=-1){
         this.anims.create({
             key: character+anim,
             frames: this.anims.generateFrameNames(character, {
                 prefix: animName,
                 start: 0,
                 end: frames,
-                suffix: ".png",
+                suffix: end,
                 zeroPad: 0
             }),
             frameRate: 15,
@@ -38,10 +42,14 @@ class Load extends Phaser.Scene {
     }
 
     create() {
-        this.createAnim("Hero_Knight_2","_walk", "Run.png_", 7);
-        this.createAnim("Hero_Knight_2","_idle", "Idle.png_", 10);
-        this.createAnim("Hero_Knight_2","_jump", "Jump.png_", 2);
-        this.createAnim("Hero_Knight_2","_attack", "Attack1.png_", 6,0);
+        this.createAnim("Hero_Knight","_walk", "Run_", 7,"_0.png");
+        this.createAnim("Hero_Knight","_idle", "Idle_", 10,"_0.png");
+        this.createAnim("Hero_Knight","_jump", "Jump_", 2,"_0.png");
+        this.createAnim("Hero_Knight","_fall", "Fall_", 2,"_0.png");
+        this.createAnim("Hero_Knight","_attack", "Attack1_", 6,"_0.png",0);
+
+        this.createAnim("GEM8PURPLE","_idle", "GEM8PURPLE_", 9,"_0.png");
+        this.createAnim("Dimensional_Portal","_idle", "Dimensional_Portal_", 5,".png");
 
          // ...and pass to the next Scene
          this.scene.start("Game");
