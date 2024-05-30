@@ -12,9 +12,72 @@ class Game extends Phaser.Scene {
         this.MAX_SPEED = 350;
         this.JUMP_SUSUTAIN = 21;
 
+        this.ENEMY_SPEED = 100;
+        this.ENEMY_ATTACK_DIST = 60;
+
         this.dead = false;
 
         this.frame = 0;
+    }
+
+    createEnemy(x,y){
+        let enemy = this.physics.add.sprite(160, 80, "Fantasy_Warrior", "Attack1_0_0.png").setScale(SCALE);
+        enemy.setCollideWorldBounds(true);
+        enemy.setBodySize(30, 40);
+        enemy.on('animationcomplete', () => enemy.attacking = false);
+
+        enemy.target = this.gems[0];
+        enemy.attackTimer = 0;
+
+        // enemy.healthbar 
+
+        this.physics.add.collider(enemy, this.groundLayer);
+        this.enemies.push(enemy);
+    }
+    updateEnemy(enemy){
+        // AI update
+
+        // mon 1:30 and tues 4-5 
+
+        if(enemy.body.x - enemy.target.x > -this.ENEMY_ATTACK_DIST && enemy.body.x - enemy.target.x < this.ENEMY_ATTACK_DIST){
+            if(enemy.attackTimer < 0){
+                enemy.attackTimer += 50;
+                enemy.attacking = true;
+                enemy.body.velocity.x = 0;
+                console.log(enemy.body.x - enemy.target.x + " fight");
+            }
+        }
+        else{
+            if(enemy.body.x < enemy.target.x){
+                enemy.body.velocity.x = this.ENEMY_SPEED;
+            } else if(enemy.body.x > enemy.target.x){
+                enemy.body.velocity.x = -this.ENEMY_SPEED;
+            }
+            console.log(enemy.body.x - enemy.target.x + " walk");
+        }
+        enemy.attackTimer -= 1;
+        // movement
+
+        // Anim update 
+        let enemyName = "Fantasy_Warrior";
+        if(enemy.attacking){
+            enemy.anims.play(enemyName+'_attack', true);
+        } else if(!enemy.body.blocked.down) {
+            if(enemy.body.velocity.y < 0){
+                enemy.anims.play(enemyName+'_jump');
+            }
+            else{
+                enemy.anims.play(enemyName+'_fall');
+            }
+        } else if(enemy.body.velocity.x < -0.5) {
+            enemy.setFlip(true, false);
+            enemy.anims.play(enemyName+'_walk', true);
+        } else if(enemy.body.velocity.x > 0.5) {
+            enemy.resetFlip();
+            enemy.anims.play(enemyName+'_walk', true);
+        } else {
+            enemy.anims.play(enemyName+'_idle',true);
+        }
     }
 
     create() {
@@ -44,6 +107,8 @@ class Game extends Phaser.Scene {
         my.sprite.player.setBodySize(30, 48);
         my.sprite.player.on('animationcomplete', () => my.sprite.player.attacking = false);
 
+        this.enemies = [];
+
         // Create a layer
         this.groundLayer = this.map.createLayer("Ground", this.tileset, 0, 0);
         this.groundLayer.setScale(SCALE);
@@ -62,7 +127,7 @@ class Game extends Phaser.Scene {
 
         this.propsLayer = this.map.createLayer("Props", this.tileset, 0, 0);
 
-        
+
         // this.platformLayer = this.map.createLayer("Platforms", this.tileset, 0, 0);
         // this.platformLayer.setScale(SCALE);
         // this.platformLayer.setCollisionByProperty({
@@ -108,18 +173,19 @@ class Game extends Phaser.Scene {
             console.log(e);
             if(e.name == "Gem"){
                 let o = this.physics.add.staticSprite(e.x,e.y, "GEM8PURPLE", "GEM8PURPLE_0_0.png").setScale(SCALE);
-                this.physics.add.collider(my.sprite.player, o);
+                // this.physics.add.collider(my.sprite.player, o);
                 o.anims.play('GEM8PURPLE_idle', true);
                 this.gems.push(o);
             } else {
                 let o = this.physics.add.staticSprite(e.x,e.y, "Dimensional_Portal", "Dimensional_Portal_0.png").setScale(SCALE);
-                this.physics.add.collider(my.sprite.player, o);
+                // this.physics.add.collider(my.sprite.player, o);
                 o.anims.play('Dimensional_Portal_idle', true);
                 this.portals.push(o);
             }
             
         });
         
+        this.createEnemy(160,80);
 
         // this.objects = this.map.createFromObjects("Objects", {
         //     name: "Portal",
@@ -248,6 +314,9 @@ class Game extends Phaser.Scene {
     
             // my.sprite.gem.anims.play('GEM8PURPLE_idle', true);
             
+            this.enemies.forEach(e => {
+                this.updateEnemy(e);
+            });
         }
 
         // var tile = this.groundLayer.getTileAtWorldXY(my.sprite.player.x,my.sprite.player.y);
