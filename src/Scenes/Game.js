@@ -295,7 +295,7 @@ class Game extends Phaser.Scene {
         });
         
         //Debug enemy
-        this.createEnemy(160,80);
+        // this.createEnemy(160,80);
 
         // this.objects = this.map.createFromObjects("Objects", {
         //     name: "Portal",
@@ -353,8 +353,14 @@ class Game extends Phaser.Scene {
     }
 
     update() {
+        // Lose
         if(my.sprite.player.hp<1 || this.gems.length<1 ){
             this.scene.restart();
+        }
+        // Win
+        if(this.portals.length<1 && this.enemies.length<1){
+            this.time.delayedCall(200,()=>this.scene.restart());
+            
         }
 
         this.updateHealthbar(my.sprite.player);

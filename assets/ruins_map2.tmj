@@ -149,17 +149,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":2,
-                 "name":"Portal",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":34,
-                 "y":447.333333333333
-                }, 
-                {
-                 "height":0,
                  "id":3,
                  "name":"Portal",
                  "rotation":0,
@@ -168,17 +157,6 @@
                  "width":0,
                  "x":990.666666666667,
                  "y":301.333333333333
-                }, 
-                {
-                 "height":0,
-                 "id":4,
-                 "name":"Portal",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":984.666666666667,
-                 "y":444.666666666667
                 }, 
                 {
                  "height":0,
