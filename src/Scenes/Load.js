@@ -47,6 +47,7 @@ class Load extends Phaser.Scene {
         this.createAnim("Hero_Knight","_idle", "Idle_", 10,"_0.png");
         this.createAnim("Hero_Knight","_jump", "Jump_", 2,"_0.png");
         this.createAnim("Hero_Knight","_fall", "Fall_", 2,"_0.png");
+        this.createAnim("Hero_Knight","_death", "Death_", 9,"_0.png");
         this.createAnim("Hero_Knight","_attack", "Attack1_", 6,"_0.png",0);
 
 
@@ -54,6 +55,7 @@ class Load extends Phaser.Scene {
         this.createAnim("Fantasy_Warrior","_idle", "Idle_", 9,"_0.png");
         this.createAnim("Fantasy_Warrior","_jump", "Jump_", 2,"_0.png");
         this.createAnim("Fantasy_Warrior","_fall", "Fall_", 2,"_0.png");
+        this.createAnim("Fantasy_Warrior","_death", "Death_", 6,"_0.png");
         this.createAnim("Fantasy_Warrior","_attack", "Attack1_", 6,"_0.png",0);
 
         this.createAnim("GEM8PURPLE","_idle", "GEM8PURPLE_", 9,"_0.png");
