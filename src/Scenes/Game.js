@@ -80,10 +80,16 @@ class Game extends Phaser.Scene {
                 // console.log(enemy.body.x - enemy.target.x + " fight");
 
                 // attack 
-                let players = [my.sprite.player];
-                this.attack(enemy, players, 1);
-                this.attack(enemy, this.gems, 1);
-                console.log("attacked");
+                
+                this.time.delayedCall(200,()=>{
+                    if(enemy != null && enemy.hp > 0){
+                        let players = [my.sprite.player];
+                        this.attack(enemy, players, 1);
+                        this.attack(enemy, this.gems, 1);
+                        console.log("attacked");
+                    }
+                });
+
             }
         }
         else{
@@ -200,7 +206,7 @@ class Game extends Phaser.Scene {
 
         let mapW = 64;
         let mapH = 32;
-        this.map = this.add.tilemap("tilemap_tiled", 16, 16, mapW, mapH);
+        this.map = this.add.tilemap("tilemap_tiled", PPU, PPU, mapW, mapH);
 
         // Add a tileset to the map
         // First parameter: name we gave the tileset in Tiled
@@ -212,8 +218,8 @@ class Game extends Phaser.Scene {
 
 
         // set up player avatar
-        console.log("load respawn "+respawnX + " " + respawnY);
-        my.sprite.player = this.physics.add.sprite(respawnX, respawnY, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
+        // console.log("load respawn "+respawnX + " " + respawnY);
+        my.sprite.player = this.physics.add.sprite(mapW*PPU*0.5, mapH*PPU*0.5, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
         my.sprite.player.setCollideWorldBounds(true);
         my.sprite.player.setBodySize(30, 48);
         my.sprite.player.on('animationcomplete', () => my.sprite.player.attacking = false);
@@ -331,7 +337,7 @@ class Game extends Phaser.Scene {
             if(!my.sprite.player.attacking){
                 my.sprite.player.attacking = true;
                 // attack
-                this.attack(my.sprite.player,this.enemies,2,200);
+                this.attack(my.sprite.player,this.enemies,2,150);
             }
         }, this);
         
