@@ -199,7 +199,7 @@ class Game extends Phaser.Scene {
 
     create() {
         this.physics.world.drawDebug = false;
-
+        // figure out debug
 
         // my.sprite.gem = this.physics.add.staticSprite(50*16*0.5, 24*16, "GEM8PURPLE", "GEM8PURPLE_0_0.png").setScale(SCALE);
         // this.physics.add.collider(my.sprite.player, my.sprite.gem);
