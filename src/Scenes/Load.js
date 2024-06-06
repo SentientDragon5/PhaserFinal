@@ -9,6 +9,8 @@ class Load extends Phaser.Scene {
         // Load characters spritesheet
         this.load.atlas("Hero_Knight", "Hero_Knight.png", "Hero_Knight.json");
         this.load.atlas("Fantasy_Warrior", "Fantasy_Warrior.png", "Fantasy_Warrior.json");
+        this.load.atlas("Martial_1", "Martial_1.png", "Martial_1.json");
+        this.load.atlas("Martial_2", "Martial_2.png", "Martial_2.json");
 
         this.load.atlas("GEM8PURPLE", "GEM8PURPLE.png", "GEM8PURPLE.json");
         this.load.atlas("Dimensional_Portal", "Dimensional_Portal.png", "Dimensional_Portal.json");
@@ -57,6 +59,20 @@ class Load extends Phaser.Scene {
         this.createAnim("Fantasy_Warrior","_fall", "Fall_", 2,"_0.png");
         this.createAnim("Fantasy_Warrior","_death", "Death_", 6,"_0.png");
         this.createAnim("Fantasy_Warrior","_attack", "Attack1_", 6,"_0.png",0);
+        
+        this.createAnim("Martial_1","_walk", "Run_", 7,"_0.png");
+        this.createAnim("Martial_1","_idle", "Idle_", 7,"_0.png");
+        this.createAnim("Martial_1","_jump", "Jump_", 1,"_0.png");
+        this.createAnim("Martial_1","_fall", "Fall_", 1,"_0.png");
+        this.createAnim("Martial_1","_death", "Death_", 5,"_0.png");
+        this.createAnim("Martial_1","_attack", "Attack1_", 5,"_0.png",0);
+
+        this.createAnim("Martial_2","_walk", "Run_", 7,"_0.png");
+        this.createAnim("Martial_2","_idle", "Idle_", 7,"_0.png");
+        this.createAnim("Martial_2","_jump", "Jump_", 1,"_0.png");
+        this.createAnim("Martial_2","_fall", "Fall_", 1,"_0.png");
+        this.createAnim("Martial_2","_death", "Death_", 5,"_0.png");
+        this.createAnim("Martial_2","_attack", "Attack1_", 5,"_0.png",0);
 
         this.createAnim("GEM8PURPLE","_idle", "GEM8PURPLE_", 9,"_0.png");
         this.createAnim("Dimensional_Portal","_idle", "Dimensional_Portal_", 5,".png");

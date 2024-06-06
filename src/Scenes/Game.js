@@ -45,10 +45,17 @@ class Game extends Phaser.Scene {
         parent.healthbar.destroy();
     }
 
-    createEnemy(x,y){
-        let enemy = this.physics.add.sprite(x, y, "Fantasy_Warrior", "Attack1_0_0.png").setScale(SCALE);
+    createEnemy(type,x,y){
+        let enemy = this.physics.add.sprite(x, y, type, "Attack1_0_0.png").setScale(SCALE);
+        enemy.unitType = type;
         enemy.setCollideWorldBounds(true);
-        enemy.setBodySize(30, 40);
+        if(type == "Fantasy_Warrior"){
+            enemy.setBodySize(30, 40);
+        } else if (type == "Martial_1"){
+            enemy.setBodySize(30, 45);
+        } else if (type == "Martial_2"){
+            enemy.setBodySize(30, 52);
+        }
         enemy.on('animationcomplete', () => {
             console.log("anim over" +  (enemy.hp))
             
@@ -111,7 +118,7 @@ class Game extends Phaser.Scene {
         this.updateHealthbar(enemy);
 
         // Anim update 
-        let enemyName = "Fantasy_Warrior";
+        let enemyName = enemy.unitType;
         if(enemy.hp <= 0){
             enemy.anims.play(enemyName+'_death',true);
             if(enemy.anims.currentFrame.index > 5){
@@ -166,15 +173,15 @@ class Game extends Phaser.Scene {
         o.anims.play('Dimensional_Portal_idle', true);
         this.portals.push(o);
 
-        o.spawnTimer = 50;
+        o.spawnTimer = 50; //initial delay
         o.waitTimes = [50, 100, 10, 10, 200, 10, 10, 10];
-        o.i = 0;
+        o.i = 0; //index in wait times
     }
     updatePortal(portal){
         if(portal.spawnTimer < 1){
             portal.spawnTimer+=portal.waitTimes[portal.i];
             portal.i++;
-            this.createEnemy(portal.x,portal.y);
+            this.createEnemy("Martial_2",portal.x,portal.y);
         }
         else{
             portal.spawnTimer--;
@@ -248,46 +255,6 @@ class Game extends Phaser.Scene {
 
         this.propsLayer = this.map.createLayer("Props", this.tileset, 0, 0);
 
-
-        // this.platformLayer = this.map.createLayer("Platforms", this.tileset, 0, 0);
-        // this.platformLayer.setScale(SCALE);
-        // this.platformLayer.setCollisionByProperty({
-        //     collides: true
-        // });
-        // this.physics.add.collider(my.sprite.player, this.platformLayer);
-        // this.platformLayer.forEachTile((tile) => {
-        //     if (tile.properties.platform) {
-        //         tile.setCollision(false, false, true, false);
-        //     }
-        // });
-
-
-        // Enable collision handling
-
-
-        // this.gems = this.map.createFromObjects("Gems", {
-        //     name: "Gem",
-        //     key: "tilemap_sheet",
-        //     frame: 62
-        // });
-        // this.gems.map((obj) => {
-        //     obj.x *= SCALE;
-        //     obj.y *= SCALE;
-        //     obj.setScale(SCALE);
-        // });
-        // this.physics.world.enable(this.gems, Phaser.Physics.Arcade.STATIC_BODY);
-        // this.gemGroup = this.add.group(this.gems);
-        // this.physics.add.overlap(my.sprite.player, this.gemGroup, (obj1, obj2) => {
-        //     obj2.destroy(); // remove coin on overlap
-        //     score++;
-        // });
-        // this.objects = this.physics.add.group({
-        //     classType: Lizard,
-        //     createCallback: (go) => {
-        //         const 
-        //     }
-        // })
-        // this.objectGroup = this.add.group();
         this.portals = [];
         this.gems = [];
         this.map.getObjectLayer("Objects").objects.forEach(e => {
@@ -299,26 +266,6 @@ class Game extends Phaser.Scene {
             }
             
         });
-        
-        //Debug enemy
-        // this.createEnemy(160,80);
-
-        // this.objects = this.map.createFromObjects("Objects", {
-        //     name: "Portal",
-        //     key: "tilemap_sheet",
-        //     frame: 103
-        // });
-        // this.objects.map((obj) => {
-        //     obj.x *= SCALE;
-        //     obj.y *= SCALE;
-        //     obj.setScale(SCALE);
-        // });
-
-        // this.physics.world.enable(this.objects, Phaser.Physics.Arcade.STATIC_BODY);
-        // this.objectsGroup = this.add.group(this.objects);
-        // this.physics.add.collider(my.sprite.player, this.objectsGroup);
-        
-
 
         // set up Phaser-provided cursor key input
         cursors = this.input.keyboard.createCursorKeys();
@@ -458,27 +405,6 @@ class Game extends Phaser.Scene {
                 this.updatePortal(e);
             });
         }
-
-        // var tile = this.groundLayer.getTileAtWorldXY(my.sprite.player.x,my.sprite.player.y);
-        // if(tile != null){
-        //     if(tile.properties.gem){
-        //         this.gems++;
-        //         this.groundLayer.removeTileAtWorldXY(my.sprite.player.x,my.sprite.player.y);
-        //     }
-        //     if(tile.properties.danger){
-        //         this.death();
-        //     }
-
-        //     if(tile.properties.respawn){
-        //         var pos = this.cameras.main.getWorldPoint(my.sprite.player.x,my.sprite.player.y);
-        //         if(respawnX != tile.getCenterX(this.cameras.main) && respawnY != tile.getCenterY(this.cameras.main)){
-        //             respawnX = tile.getCenterX(this.cameras.main);
-        //             respawnY = tile.getCenterY(this.cameras.main);
-        //             console.log("set respawn "+respawnX + " " + respawnY);
-        //             this.poof(respawnX,respawnY);
-        //         }
-        //     }
-        // }
 
         this.frame++;
     }
