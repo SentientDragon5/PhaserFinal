@@ -12,8 +12,9 @@ class Game extends Phaser.Scene {
         this.MAX_SPEED = 350;
         this.JUMP_SUSUTAIN = 21;
 
-        this.ENEMY_SPEED = 80;
         this.ENEMY_ATTACK_DIST = 60;
+        this.ENEMY_FORGET_DIST = 400;
+        this.ENEMY_ATTACK_DELAY = 300;
 
         this.dead = false;
 
@@ -24,6 +25,21 @@ class Game extends Phaser.Scene {
     }
     distobjs(o1,o2){
         return this.dist(o1.x,o1.y,o2.x,o2.y);
+    }
+    closestobj(me, list){
+        if(list.length < 1){
+            return null;
+        }
+        let max_dist = this.distobjs(me, list[0]);
+        let max_obj = list[0]
+        list.forEach(e => {
+            let dist = this.distobjs(me,e);
+            if(dist < max_dist){
+                max_obj = e;
+                max_dist = dist;
+            }
+        });
+        return max_obj;
     }
 
     createHealthbar(parent){
@@ -51,23 +67,28 @@ class Game extends Phaser.Scene {
         enemy.setCollideWorldBounds(true);
         if(type == "Fantasy_Warrior"){
             enemy.setBodySize(30, 40);
+            enemy.mhp = 3;
+            enemy.speed = 80;
         } else if (type == "Martial_1"){
             enemy.setBodySize(30, 45);
+            enemy.mhp = 7;
+            enemy.speed = 40;
         } else if (type == "Martial_2"){
             enemy.setBodySize(30, 52);
+            enemy.mhp = 2;
+            enemy.speed = 120;
         }
         enemy.on('animationcomplete', () => {
-            console.log("anim over" +  (enemy.hp))
+            // console.log("anim over" +  (enemy.hp))
             
-            if(enemy.attacking){
-                enemy.attacking = false
-            } 
+            enemy.attacking = false;
+            enemy.hit = false;
         });
 
         enemy.target = this.gems[0];
-        enemy.attackTimer = 0;
+        enemy.attackFreq = 50;
+        enemy.attackTimer = enemy.attackFreq;
 
-        enemy.mhp = 2;
         enemy.hp = enemy.mhp;
         this.createHealthbar(enemy);
 
@@ -76,19 +97,23 @@ class Game extends Phaser.Scene {
     }
     updateEnemy(enemy){
         // AI update
-
+        if(enemy.target == my.sprite.player){
+            if(this.distobjs(enemy, my.sprite.player) > this.ENEMY_FORGET_DIST){
+                enemy.target = this.closestobj(enemy, this.gems);
+            }
+        }
         // mon 1:30 and tues 4-5 
 
         if(enemy.body.x - enemy.target.x > -this.ENEMY_ATTACK_DIST && enemy.body.x - enemy.target.x < this.ENEMY_ATTACK_DIST){
             if(enemy.attackTimer < 1){
-                enemy.attackTimer += 50;
+                enemy.attackTimer += enemy.attackFreq;
                 enemy.attacking = true;
                 enemy.body.velocity.x = 0;
                 // console.log(enemy.body.x - enemy.target.x + " fight");
 
                 // attack 
                 
-                this.time.delayedCall(200,()=>{
+                this.time.delayedCall(this.ENEMY_ATTACK_DELAY,()=>{
                     if(enemy != null && enemy.hp > 0){
                         let players = [my.sprite.player];
                         this.attack(enemy, players, 1);
@@ -100,11 +125,12 @@ class Game extends Phaser.Scene {
             }
         }
         else{
+            enemy.attackTimer = enemy.attackFreq;
             if(enemy.body.x < enemy.target.x){
-                enemy.body.velocity.x = this.ENEMY_SPEED;
+                enemy.body.velocity.x = enemy.speed;
                 enemy.facingDir = 1;
             } else if(enemy.body.x > enemy.target.x){
-                enemy.body.velocity.x = -this.ENEMY_SPEED;
+                enemy.body.velocity.x = -enemy.speed;
                 enemy.facingDir = -1;
             }
             // console.log(enemy.body.x - enemy.target.x + " walk");
@@ -126,6 +152,8 @@ class Game extends Phaser.Scene {
                 this.destroyHealthbar(enemy);
                 enemy.destroy();
             }
+        }else if(enemy.hit){
+            enemy.anims.play(enemyName+'_hit', true);
         } else if(enemy.attacking){
             enemy.anims.play(enemyName+'_attack', true);
         } else if(!enemy.body.blocked.down) {
@@ -181,7 +209,7 @@ class Game extends Phaser.Scene {
         if(portal.spawnTimer < 1){
             portal.spawnTimer+=portal.waitTimes[portal.i];
             portal.i++;
-            this.createEnemy("Martial_2",portal.x,portal.y);
+            this.createEnemy("Martial_1",portal.x,portal.y);
         }
         else{
             portal.spawnTimer--;
@@ -200,6 +228,9 @@ class Game extends Phaser.Scene {
             if(e.x>me.x+offset_x-range_x*0.5 && e.x<me.x+offset_x+range_x*0.5
                 && e.y>me.y+offset_y-range_y*0.5 && e.y<me.y+offset_y+range_y*0.5){
                 e.hp -= dmg;
+                // console.log("hit " + e.name + " doing " + dmg + " leaving them at " + e.hp);
+                e.hit = true;
+                e.target = me;
             }
         });
     }
@@ -229,7 +260,10 @@ class Game extends Phaser.Scene {
         my.sprite.player = this.physics.add.sprite(mapW*PPU*0.5, mapH*PPU*0.5, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
         my.sprite.player.setCollideWorldBounds(true);
         my.sprite.player.setBodySize(30, 48);
-        my.sprite.player.on('animationcomplete', () => my.sprite.player.attacking = false);
+        my.sprite.player.on('animationcomplete', () => {
+            my.sprite.player.attacking = false;
+            my.sprite.player.hit = false;
+        });
 
         my.sprite.player.mhp = 6;
         my.sprite.player.hp = my.sprite.player.mhp;
