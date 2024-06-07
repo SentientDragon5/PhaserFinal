@@ -20,8 +20,7 @@ class Load extends Phaser.Scene {
         this.load.image("tilemap_packed", "Dungeon Ruins Tileset Day.png");                         // Packed tilemap
         this.load.tilemapTiledJSON("tilemap_tiled", "ruins_map2.tmj");   // Tilemap in JSON
 
-        // this.load.image("particles", "particles.png");  
-        // this.load.atlas("particles", "particles.png", "particles.json");
+        this.load.atlas("particles", "particles.png", "particles.json");
 
         this.load.spritesheet("tilemap_sheet", "Dungeon Ruins Tileset Night.png", {
             frameWidth: 16,
@@ -29,15 +28,15 @@ class Load extends Phaser.Scene {
         });
     }
 
-    createAnim(character, anim, animName, frames,end=".png", loop=-1){
+    createAnim(character, anim, animName, frames,end=".png", loop=-1,frameStart=0,zeroPad=0){
         this.anims.create({
             key: character+anim,
             frames: this.anims.generateFrameNames(character, {
                 prefix: animName,
-                start: 0,
-                end: frames,
+                start: frameStart,
+                end: frameStart+frames,
                 suffix: end,
-                zeroPad: 0
+                zeroPad: zeroPad
             }),
             frameRate: 15,
             repeat: loop
@@ -80,6 +79,12 @@ class Load extends Phaser.Scene {
         this.createAnim("GEM8PURPLE","_idle", "GEM8PURPLE_", 9,"_0.png");
         this.createAnim("Dimensional_Portal","_idle", "Dimensional_Portal_", 5,".png");
 
+
+        this.createAnim("particles","0", "tile_", 4,".png",-1,0,4);
+        this.createAnim("particles","1", "tile_", 4,".png",-1,4,4);
+        this.createAnim("particles","2", "tile_", 4,".png",-1,8,4);
+        this.createAnim("particles","3", "tile_", 4,".png",-1,11,4);
+        
          // ...and pass to the next Scene
          this.scene.start("Game");
     }

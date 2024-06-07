@@ -26,6 +26,28 @@ class Game extends Phaser.Scene {
     distobjs(o1,o2){
         return this.dist(o1.x,o1.y,o2.x,o2.y);
     }
+    preload(){
+
+        this.load.image("tilemap_packed", "Dungeon Ruins Tileset Night.png");
+    }
+
+    poof(x,y){
+        var p = this.add.particles(x,y,'particles',{
+            scale: {start: 1, end:1},
+            alpha: {start: 1, end:0},
+            lifespan: 500,
+            frequency: 5,
+            speedY: {min:-25,max:10},
+            maxParticles: 20,
+            speedX: {min:-80,max:80},
+            // maxVelocityX: 200,
+            // maxVelocityY: 200,
+            anim: ["particles0","particles1","particles2","particles3"]
+        });
+
+        p.start();
+    }
+
     closestobj(me, list){
         if(list.length < 1){
             return null;
@@ -228,6 +250,8 @@ class Game extends Phaser.Scene {
             if(e.x>me.x+offset_x-range_x*0.5 && e.x<me.x+offset_x+range_x*0.5
                 && e.y>me.y+offset_y-range_y*0.5 && e.y<me.y+offset_y+range_y*0.5){
                 e.hp -= dmg;
+                this.poof(e.x,e.y);
+                
                 // console.log("hit " + e.name + " doing " + dmg + " leaving them at " + e.hp);
                 e.hit = true;
                 e.target = me;
@@ -257,7 +281,7 @@ class Game extends Phaser.Scene {
 
         // set up player avatar
         // console.log("load respawn "+respawnX + " " + respawnY);
-        my.sprite.player = this.physics.add.sprite(mapW*PPU*0.5, mapH*PPU*0.5, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
+        my.sprite.player = this.physics.add.sprite(mapW*PPU*0.5, mapH*PPU*0.75, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
         my.sprite.player.setCollideWorldBounds(true);
         my.sprite.player.setBodySize(30, 48);
         my.sprite.player.on('animationcomplete', () => {
@@ -366,6 +390,7 @@ class Game extends Phaser.Scene {
                 // my.vfx_walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
                 if (my.sprite.player.body.blocked.down) {
                     // my.vfx_walking.start();
+                    // this.poof(my.sprite.player.x,my.sprite.player.y+20);
                 }
     
             } else if(cursors.right.isDown) {
@@ -378,6 +403,7 @@ class Game extends Phaser.Scene {
                 // my.vfx_walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
                 if (my.sprite.player.body.blocked.down) {
                     // my.vfx_walking.start();
+                    // this.poof(my.sprite.player.x,my.sprite.player.y+20);
                 }
     
             } else {
@@ -385,17 +411,25 @@ class Game extends Phaser.Scene {
                 my.sprite.player.body.setDragX(this.DRAG);
 
                 // my.vfx_walking.stop();
+                
             }
     
             // player jump
             // note that we need body.blocked rather than body.touching b/c the former applies to tilemap tiles and the latter to the "ground"
             if(!my.sprite.player.body.blocked.down) {
-
+                my.sprite.player.airborne = true;
                 // my.vfx_walking.stop();
+            }
+            if(my.sprite.player.body.blocked.down){
+                if(my.sprite.player.airborne){
+                    // Landed
+                    this.poof(my.sprite.player.x,my.sprite.player.y+30);
+                }
+                my.sprite.player.airborne = false;
             }
             if(my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
                 my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
-
+                this.poof(my.sprite.player.x,my.sprite.player.y+30);
                 // this.jumpsfx.play();
             }
             if(my.sprite.player.body.velocity.y < 0 && cursors.up.isDown){
