@@ -347,6 +347,13 @@ class Game extends Phaser.Scene {
         }, this);
         
 
+        var restartKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        restartKey.on('down', (event) => { this.scene.start('Game'); })
+        var creditsKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+        creditsKey.on('down', (event) => { this.scene.start('Credits'); })
+        var menuKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        menuKey.on('down', (event) => { this.scene.start('Menu'); })
+
         this.cameras.main.setBounds(0, 0, PPU*mapW*SCALE, PPU*mapH*SCALE);
         this.physics.world.setBounds(0,0,PPU*mapW*SCALE,PPU*mapH*SCALE);
 
@@ -366,11 +373,12 @@ class Game extends Phaser.Scene {
     update() {
         // Lose
         if(my.sprite.player.hp<1 || this.gems.length<1 ){
-            this.scene.restart();
+            
+            this.time.delayedCall(300,()=>this.scene.start("Lose"));
         }
         // Win
         if(this.portals.length<1 && this.enemies.length<1){
-            this.time.delayedCall(200,()=>this.scene.restart());
+            this.time.delayedCall(300,()=>this.scene.start("Win"));
             
         }
 

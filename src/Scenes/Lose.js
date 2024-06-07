@@ -1,7 +1,7 @@
-class Menu extends Phaser.Scene {
+class Win extends Phaser.Scene {
     
     constructor(){
-        super("Menu");
+        super("Win");
 
     }
 
@@ -10,14 +10,12 @@ class Menu extends Phaser.Scene {
 
     create() {
         // Pixelify Sans
-        var style = { font: "32px Verdana", fill: "#ffffff", align: "center" };
-        var mainLabel = this.add.text(canvas_x/2 - 120, canvas_y/2, "Gem Defender", style);
         
-        style = { font: "24px Verdana", fill: "#ffffff", align: "center" };
+        var style = { font: "32px Verdana", fill: "#ffffff", align: "center" };
+        var mainLabel = this.add.text(canvas_x/2 - 110, canvas_y/2, "You Lose", style);
         
         style = { font: "16px Verdana", fill: "#ffffff", align: "center" };
-        this.add.text(canvas_x/2 - 90, canvas_y - 0, "Controls: Arrow keys to move, Z to attack", style);
-        var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play", style);
+        var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play again", style);
         this.add.text(canvas_x/2 - 90, canvas_y - 30, "press C for Credits", style);
 
         var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

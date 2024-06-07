@@ -15,12 +15,8 @@ class Win extends Phaser.Scene {
         var mainLabel = this.add.text(canvas_x/2 - 110, canvas_y/2, "You Win!!", style);
         
         
-        style = { font: "24px Verdana", fill: "#ffffff", align: "center" };
-        var score_text = this.add.text(canvas_x/2 - 110, canvas_y/2 + 50, "Score: " + score, style);
-        var deaths_text = this.add.text(canvas_x/2 - 110, canvas_y/2 + 80, "Deaths: " + deaths, style);
-        
         style = { font: "16px Verdana", fill: "#ffffff", align: "center" };
-        var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play", style);
+        var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play again", style);
         this.add.text(canvas_x/2 - 90, canvas_y - 30, "press C for Credits", style);
 
         var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
