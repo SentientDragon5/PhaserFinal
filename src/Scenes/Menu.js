@@ -26,11 +26,16 @@ class Menu extends Phaser.Scene {
         var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spaceBar.on('down', (event) => { this.scene.start('Game'); })
         var restartKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        restartKey.on('down', (event) => { this.scene.start('Game'); })
+        restartKey.on('down', (event) => { level = 1; this.scene.start('Game'); })
         var creditsKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         creditsKey.on('down', (event) => { this.scene.start('Credits'); })
         var menuKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         menuKey.on('down', (event) => { this.scene.start('Menu'); })
+        
+        var lvl1Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        lvl1Key.on('down', (event) => { level = 1; this.scene.start('Game'); })
+        var lvl2Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        lvl2Key.on('down', (event) => { level = 2; this.scene.start('Game'); })
     }
 
     update() {

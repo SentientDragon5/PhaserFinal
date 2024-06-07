@@ -242,12 +242,20 @@ class Game extends Phaser.Scene {
         this.portals.push(o);
 
         o.spawnTimer = 50; //initial delay
-        o.waitTimes = [50, 100, 10, 10, 200, 10, 10, 10];
+        o.waitTimes = this.waitTimes;
+        o.enemyTypes = this.enemyTypes;
         o.i = 0; //index in wait times
     }
     updatePortal(portal){
         if(portal.spawnTimer < 1){
             portal.spawnTimer+=portal.waitTimes[portal.i];
+            if(portal.enemyTypes[portal.i] == "m1"){
+                this.createEnemy("Martial_1",portal.x,portal.y);
+            } else if(portal.enemyTypes[portal.i] == "m2"){
+                this.createEnemy("Martial_2",portal.x,portal.y);
+            }else{
+                this.createEnemy("Fantasy_Warrior",portal.x,portal.y);
+            }
             portal.i++;
         }
         else{
@@ -293,12 +301,16 @@ class Game extends Phaser.Scene {
             this.map = this.add.tilemap("tilemap_tiled", PPU, PPU, mapW, mapH);
             this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_packed");
             this.cameras.main.setBackgroundColor("#94b8d6");
+            this.waitTimes = [50, 100, 10, 200, 10, 10];
+            this.enemyTypes = ["f","f","f","f","f","m1"];
         }
         if(level == 2){
             mapW = 128;
             this.map = this.add.tilemap("tilemap_tiled2", PPU, PPU, mapW, mapH);
             this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_night");
             this.cameras.main.setBackgroundColor("#4b70ad");
+            this.waitTimes = [50, 150, 100, 200, 200, 100];
+            this.enemyTypes = ["m2","f","f","m1","f","m2"];
         }
 
 
@@ -393,7 +405,11 @@ class Game extends Phaser.Scene {
             }
             // Win
             if(this.portals.length<1 && this.enemies.length<1){
-                this.scene.start("Win")
+                if(level == 1){
+                    level = 2;
+                }else{
+                    this.scene.start("Win");
+                }
                 
             }
         })
