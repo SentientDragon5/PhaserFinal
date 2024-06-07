@@ -25,7 +25,7 @@ let config = {
     height: canvas_y,
     fps:30,
     backgroundColor: '#94b8d6',
-    scene: [Load, Game, Win],
+    scene: [Load, Game, Win, Menu, Credits],
     audio: {
         disableWebAudio: true
     }
@@ -36,9 +36,5 @@ const SCALE = 1.0;
 const PPU = 16;
 var my = {sprite: {}, text: {}};
 var world=0;
-var respawnX=0;
-var respawnY=0;
-var score = 0;
-var deaths = 0;
 
 const game = new Phaser.Game(config);

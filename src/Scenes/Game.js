@@ -10,7 +10,7 @@ class Game extends Phaser.Scene {
         this.physics.world.gravity.y = 2000;
         this.JUMP_VELOCITY = -600;
         this.MAX_SPEED = 350;
-        this.JUMP_SUSUTAIN = 21;
+        this.JUMP_SUSUTAIN = 18;//21 was too high
 
         this.ENEMY_ATTACK_DIST = 60;
         this.ENEMY_FORGET_DIST = 400;
@@ -209,7 +209,7 @@ class Game extends Phaser.Scene {
         if(portal.spawnTimer < 1){
             portal.spawnTimer+=portal.waitTimes[portal.i];
             portal.i++;
-            this.createEnemy("Martial_1",portal.x,portal.y);
+            this.createEnemy("Fantasy_Warrior",portal.x,portal.y);
         }
         else{
             portal.spawnTimer--;

@@ -1,7 +1,7 @@
-class Win extends Phaser.Scene {
+class Menu extends Phaser.Scene {
     
     constructor(){
-        super("Win");
+        super("Menu");
 
     }
 
@@ -10,14 +10,10 @@ class Win extends Phaser.Scene {
 
     create() {
         // Pixelify Sans
-        
         var style = { font: "32px Verdana", fill: "#ffffff", align: "center" };
-        var mainLabel = this.add.text(canvas_x/2 - 110, canvas_y/2, "You Win!!", style);
-        
+        var mainLabel = this.add.text(canvas_x/2 - 120, canvas_y/2, "Gem Defender", style);
         
         style = { font: "24px Verdana", fill: "#ffffff", align: "center" };
-        var score_text = this.add.text(canvas_x/2 - 110, canvas_y/2 + 50, "Score: " + score, style);
-        var deaths_text = this.add.text(canvas_x/2 - 110, canvas_y/2 + 80, "Deaths: " + deaths, style);
         
         style = { font: "16px Verdana", fill: "#ffffff", align: "center" };
         var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play", style);

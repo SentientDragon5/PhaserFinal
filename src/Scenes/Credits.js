@@ -1,25 +1,40 @@
-class Win extends Phaser.Scene {
+class Credits extends Phaser.Scene {
     
     constructor(){
-        super("Win");
+        super("Credits");
 
     }
 
     preload() {
+        
     }
 
     create() {
         // Pixelify Sans
-        
         var style = { font: "32px Verdana", fill: "#ffffff", align: "center" };
-        var mainLabel = this.add.text(canvas_x/2 - 110, canvas_y/2, "You Win!!", style);
-        
-        
-        style = { font: "24px Verdana", fill: "#ffffff", align: "center" };
-        var score_text = this.add.text(canvas_x/2 - 110, canvas_y/2 + 50, "Score: " + score, style);
-        var deaths_text = this.add.text(canvas_x/2 - 110, canvas_y/2 + 80, "Deaths: " + deaths, style);
+        var mainLabel = this.add.text(canvas_x/2 - 70, canvas_y/2-110, "Credits", style);
         
         style = { font: "16px Verdana", fill: "#ffffff", align: "center" };
+        let y_offset = 0;
+
+        let credits = [
+        "raccoontruck.itch.io/fluttering-tiger-moth",
+        "luizmelo.itch.io/martial-hero-2",
+        "luizmelo.itch.io/martial-hero",
+        "luizmelo.itch.io/hero-knight",
+        "luizmelo.itch.io/fantasy-warrior",
+        "penusbmic.itch.io/free-dungeon-ruins-tileset",
+        "karsiori.itch.io/free-pixel-art-gem-pack"
+        ]
+
+        credits.forEach(e => {
+            this.add.text(110, canvas_y/2 - 50 + y_offset, e, style);
+            y_offset += 20;//spacing
+        });
+
+
+        style = { font: "16px Verdana", fill: "#ffffff", align: "center" };
+        this.add.text(canvas_x/2 - 90, canvas_y - 90, "press Q for Menu", style);
         var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play", style);
         this.add.text(canvas_x/2 - 90, canvas_y - 30, "press C for Credits", style);
 
