@@ -35,6 +35,6 @@ var cursors;
 const SCALE = 1.0;
 const PPU = 16;
 var my = {sprite: {}, text: {}};
-var world=0;
+var level=1;
 
 const game = new Phaser.Game(config);

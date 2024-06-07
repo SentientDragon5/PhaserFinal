@@ -160,8 +160,6 @@ class Game extends Phaser.Scene {
         else{
             enemy.attackTimer = enemy.attackFreq;
             // jump
-
-            console.log(enemy.body.blocked.left + " " + enemy.body.blocked.right);
             if(enemy.body.blocked.down && (enemy.body.blocked.left || enemy.body.blocked.right)) {
                 enemy.body.setVelocityY(this.JUMP_VELOCITY);
                 this.poof(enemy.x,enemy.y+30);
