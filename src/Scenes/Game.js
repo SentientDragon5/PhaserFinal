@@ -249,7 +249,6 @@ class Game extends Phaser.Scene {
         if(portal.spawnTimer < 1){
             portal.spawnTimer+=portal.waitTimes[portal.i];
             portal.i++;
-            this.createEnemy("Fantasy_Warrior",portal.x,portal.y);
         }
         else{
             portal.spawnTimer--;
@@ -286,12 +285,22 @@ class Game extends Phaser.Scene {
 
         let mapW = 64;
         let mapH = 32;
-        this.map = this.add.tilemap("tilemap_tiled", PPU, PPU, mapW, mapH);
 
         // Add a tileset to the map
         // First parameter: name we gave the tileset in Tiled
         // Second parameter: key for the tilesheet (from this.load.image in Load.js)
-        this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_packed");
+        if(level == 1){
+            this.map = this.add.tilemap("tilemap_tiled", PPU, PPU, mapW, mapH);
+            this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_packed");
+            this.cameras.main.setBackgroundColor("#94b8d6");
+        }
+        if(level == 2){
+            mapW = 128;
+            this.map = this.add.tilemap("tilemap_tiled2", PPU, PPU, mapW, mapH);
+            this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_night");
+            this.cameras.main.setBackgroundColor("#4b70ad");
+        }
+
 
         this.bgfLayer = this.map.createLayer("BackgroundFar", this.tileset, 0, 0);
         this.bgLayer = this.map.createLayer("Background", this.tileset, 0, 0);
