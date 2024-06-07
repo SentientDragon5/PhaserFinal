@@ -11,12 +11,15 @@ class Menu extends Phaser.Scene {
     create() {
         // Pixelify Sans
         var style = { font: "32px Verdana", fill: "#ffffff", align: "center" };
-        var mainLabel = this.add.text(canvas_x/2 - 120, canvas_y/2, "Gem Defender", style);
+        var mainLabel = this.add.text(canvas_x/2 - 130, canvas_y/2 - 90, "Gem Defender", style);
         
-        style = { font: "24px Verdana", fill: "#ffffff", align: "center" };
+        let o = this.physics.add.staticSprite(canvas_x/2, canvas_y/2, "GEM8PURPLE", "GEM8PURPLE_0_0.png").setScale(4);
+        o.anims.play('GEM8PURPLE_idle', true);
+
+        style = { font: "12px Verdana", fill: "#ffffff", align: "center" };
+        this.add.text(canvas_x/2 - 120, canvas_y/2 +60, "Controls: Arrow keys to move\nZ to attack, R to restart, Q to quit", style);
         
         style = { font: "16px Verdana", fill: "#ffffff", align: "center" };
-        this.add.text(canvas_x/2 - 90, canvas_y - 0, "Controls: Arrow keys to move, Z to attack", style);
         var message = this.add.text(canvas_x/2 - 90, canvas_y - 60, "press SPACE to play", style);
         this.add.text(canvas_x/2 - 90, canvas_y - 30, "press C for Credits", style);
 

@@ -1,7 +1,7 @@
-class Win extends Phaser.Scene {
+class Lose extends Phaser.Scene {
     
     constructor(){
-        super("Win");
+        super("Lose");
 
     }
 

@@ -14,7 +14,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            debug: false,
             gravity: {
                 x: 0,
                 y: 0
@@ -25,7 +25,7 @@ let config = {
     height: canvas_y,
     fps:30,
     backgroundColor: '#94b8d6',
-    scene: [Load, Game, Win, Menu, Credits],
+    scene: [Load, Game, Win, Menu, Credits, Lose],
     audio: {
         disableWebAudio: true
     }

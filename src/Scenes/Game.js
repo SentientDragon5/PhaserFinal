@@ -17,7 +17,7 @@ class Game extends Phaser.Scene {
         this.ENEMY_ATTACK_DELAY = 300;
 
         this.dead = false;
-
+        this.lost = false;
         this.frame = 0;
     }
     dist(x1,y1,x2,y2){
@@ -119,12 +119,23 @@ class Game extends Phaser.Scene {
     }
     updateEnemy(enemy){
         // AI update
-        // if(enemy.target == my.sprite.player){
-        //     if(this.distobjs(enemy, my.sprite.player) > this.ENEMY_FORGET_DIST){
-        //         enemy.target = this.closestobj(enemy, this.gems);
-        //     }
-        // }
+        if(enemy.target == my.sprite.player){
+            if(this.distobjs(enemy, my.sprite.player) > this.ENEMY_FORGET_DIST){
+                enemy.target = this.closestobj(enemy, this.gems);
+            }
+        }
         // mon 1:30 and tues 4-5 
+        if(enemy.target == null){
+            if(this.gems.length > 1){
+                enemy.target = this.closestobj(enemy, this.gems);
+            }
+            enemy.target = my.sprite.player;
+        }
+
+        if(enemy.target == null){
+            console.log("No target");
+            return;
+        }
         
         if(enemy.body.x - enemy.target.x > -enemy.speed*2 && enemy.body.x - enemy.target.x < enemy.speed*2){
             if(enemy.attackTimer < 1){
@@ -148,6 +159,15 @@ class Game extends Phaser.Scene {
         }
         else{
             enemy.attackTimer = enemy.attackFreq;
+            // jump
+
+            console.log(enemy.body.blocked.left + " " + enemy.body.blocked.right);
+            if(enemy.body.blocked.down && (enemy.body.blocked.left || enemy.body.blocked.right)) {
+                enemy.body.setVelocityY(this.JUMP_VELOCITY);
+                this.poof(enemy.x,enemy.y+30);
+                // this.jumpsfx.play();
+            }
+
             if(enemy.body.x < enemy.target.x){
                 enemy.body.velocity.x = enemy.speed;
                 enemy.facingDir = 1;
@@ -358,6 +378,20 @@ class Game extends Phaser.Scene {
         this.physics.world.setBounds(0,0,PPU*mapW*SCALE,PPU*mapH*SCALE);
 
         this.cameras.main.startFollow(my.sprite.player);
+
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+            // Lose
+            if(my.sprite.player.hp<1 || this.gems.length<1 ){
+                this.scene.start("Lose");
+            }
+            // Win
+            if(this.portals.length<1 && this.enemies.length<1){
+                this.scene.start("Win")
+                
+            }
+        })
+
+        // this.cameras.main.fadeIn(1000, 255, 255, 255)
     }
 
     death(){
@@ -372,12 +406,16 @@ class Game extends Phaser.Scene {
 
     update() {
         // Lose
-        if(my.sprite.player.hp<1 || this.gems.length<1 ){
-            
-            this.time.delayedCall(300,()=>this.scene.start("Lose"));
+        if((my.sprite.player.hp<1 || this.gems.length<1) && !this.lost){
+            console.log("Lose");
+            this.lost = true;
+            my.sprite.player.anims.play('Hero_Knight_death', true);
+            this.cameras.main.fadeOut(1000, 255, 255, 255);
+            // this.time.delayedCall(300,()=>this.scene.start("Lose"));
         }
         // Win
         if(this.portals.length<1 && this.enemies.length<1){
+            // this.cameras.main.fadeOut(1000, 255, 255, 255);
             this.time.delayedCall(300,()=>this.scene.start("Win"));
             
         }
