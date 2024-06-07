@@ -17,7 +17,7 @@ class Load extends Phaser.Scene {
 
 
         // Load tilemap information
-        this.load.image("tilemap_packed", "Dungeon Ruins Tileset Day.png");                         // Packed tilemap
+        this.load.image("tilemap_packed", "Dungeon Ruins Tileset Night.png");                         // Packed tilemap
         this.load.tilemapTiledJSON("tilemap_tiled", "ruins_map2.tmj");   // Tilemap in JSON
 
         this.load.atlas("particles", "particles.png", "particles.json");
