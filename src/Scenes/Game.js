@@ -119,14 +119,14 @@ class Game extends Phaser.Scene {
     }
     updateEnemy(enemy){
         // AI update
-        if(enemy.target == my.sprite.player){
-            if(this.distobjs(enemy, my.sprite.player) > this.ENEMY_FORGET_DIST){
-                enemy.target = this.closestobj(enemy, this.gems);
-            }
-        }
+        // if(enemy.target == my.sprite.player){
+        //     if(this.distobjs(enemy, my.sprite.player) > this.ENEMY_FORGET_DIST){
+        //         enemy.target = this.closestobj(enemy, this.gems);
+        //     }
+        // }
         // mon 1:30 and tues 4-5 
-
-        if(enemy.body.x - enemy.target.x > -this.ENEMY_ATTACK_DIST && enemy.body.x - enemy.target.x < this.ENEMY_ATTACK_DIST){
+        
+        if(enemy.body.x - enemy.target.x > -enemy.speed*2 && enemy.body.x - enemy.target.x < enemy.speed*2){
             if(enemy.attackTimer < 1){
                 enemy.attackTimer += enemy.attackFreq;
                 enemy.attacking = true;
@@ -251,7 +251,7 @@ class Game extends Phaser.Scene {
                 && e.y>me.y+offset_y-range_y*0.5 && e.y<me.y+offset_y+range_y*0.5){
                 e.hp -= dmg;
                 this.poof(e.x,e.y);
-                
+
                 // console.log("hit " + e.name + " doing " + dmg + " leaving them at " + e.hp);
                 e.hit = true;
                 e.target = me;
