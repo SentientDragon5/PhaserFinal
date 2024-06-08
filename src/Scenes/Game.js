@@ -137,7 +137,7 @@ class Game extends Phaser.Scene {
             return;
         }
         
-        if(enemy.body.x - enemy.target.x > -enemy.speed*2 && enemy.body.x - enemy.target.x < enemy.speed*2){
+        if(enemy.body.x - enemy.target.x > -enemy.speed*1.5 && enemy.body.x - enemy.target.x < enemy.speed*1.5){
             if(enemy.attackTimer < 1){
                 enemy.attackTimer += enemy.attackFreq;
                 enemy.attacking = true;
