@@ -93,7 +93,7 @@ class Game extends Phaser.Scene {
             enemy.speed = 80;
         } else if (type == "Martial_1"){
             enemy.setBodySize(30, 45);
-            enemy.mhp = 7;
+            enemy.mhp = 5;
             enemy.speed = 40;
         } else if (type == "Martial_2"){
             enemy.setBodySize(30, 52);
@@ -311,7 +311,7 @@ class Game extends Phaser.Scene {
             this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_night");
             this.cameras.main.setBackgroundColor("#4b70ad");
             this.waitTimes = [50, 150, 100, 200, 200, 100];
-            this.enemyTypes = ["m2","f","f","m1","f","m2"];
+            this.enemyTypes = ["m2","f","m1","m2","m2"];
         }
 
 
