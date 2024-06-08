@@ -137,7 +137,7 @@ class Game extends Phaser.Scene {
             return;
         }
         
-        if(enemy.body.x - enemy.target.x > -enemy.speed && enemy.body.x - enemy.target.x < enemy.speed){
+        if(enemy.body.x - enemy.target.x > -enemy.speed*2 && enemy.body.x - enemy.target.x < enemy.speed*2){
             if(enemy.attackTimer < 1){
                 enemy.attackTimer += enemy.attackFreq;
                 enemy.attacking = true;
@@ -282,6 +282,7 @@ class Game extends Phaser.Scene {
                 e.target = me;
             }
         });
+        this.slashSFX.play();
     }
 
     create() {
@@ -418,6 +419,23 @@ class Game extends Phaser.Scene {
         })
 
         // this.cameras.main.fadeIn(1000, 255, 255, 255)
+
+        this.music = this.sound.add('music', {
+            volume: 0.4,
+            loop: true
+        });
+        this.slashSFX = this.sound.add('slashSFX', {
+            volume: 0.7,
+            loop: false
+        });
+        this.landSFX = this.sound.add('landSFX', {
+            volume: 0.7,
+            loop: false
+        });
+
+        if(level == 1){
+            this.music.play();
+        }
     }
 
     death(){
@@ -508,6 +526,7 @@ class Game extends Phaser.Scene {
                 if(my.sprite.player.airborne){
                     // Landed
                     this.poof(my.sprite.player.x,my.sprite.player.y+30);
+                    this.landSFX.play();
                 }
                 my.sprite.player.airborne = false;
             }

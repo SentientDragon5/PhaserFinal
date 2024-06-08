@@ -30,7 +30,10 @@ class Load extends Phaser.Scene {
         });
 
         // sound
-        this.load.audio('music', "wind-blowing-sfx-12809.mp3");
+        //wind-blowing-sfx-12809.mp3
+        this.load.audio('music', "medieval-fantasy-142837.mp3");
+        this.load.audio('slashSFX', "sword-sound-2-36274.mp3");
+        this.load.audio('landSFX', "land2-43790.mp3");
     }
 
     createAnim(character, anim, animName, frames,end=".png", loop=-1,frameStart=0,zeroPad=0){

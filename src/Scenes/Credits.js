@@ -24,7 +24,11 @@ class Credits extends Phaser.Scene {
         "luizmelo.itch.io/hero-knight",
         "luizmelo.itch.io/fantasy-warrior",
         "penusbmic.itch.io/free-dungeon-ruins-tileset",
-        "karsiori.itch.io/free-pixel-art-gem-pack"
+        "karsiori.itch.io/free-pixel-art-gem-pack",
+        "pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=36274",
+        "pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12809",
+        "pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=43790",
+        "pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=142837"
         ]
 
         credits.forEach(e => {
