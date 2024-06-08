@@ -321,7 +321,7 @@ class Game extends Phaser.Scene {
 
         // set up player avatar
         // console.log("load respawn "+respawnX + " " + respawnY);
-        my.sprite.player = this.physics.add.sprite(mapW*PPU*0.5, mapH*PPU*0.75, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
+        my.sprite.player = this.physics.add.sprite(mapW*PPU*0.5, mapH*PPU*0.5, "Hero_Knight", "Attack1_0_0.png").setScale(SCALE);
         my.sprite.player.setCollideWorldBounds(true);
         my.sprite.player.setBodySize(30, 48);
         my.sprite.player.on('animationcomplete', () => {
