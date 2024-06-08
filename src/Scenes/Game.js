@@ -137,7 +137,7 @@ class Game extends Phaser.Scene {
             return;
         }
         
-        if(enemy.body.x - enemy.target.x > -enemy.speed*2 && enemy.body.x - enemy.target.x < enemy.speed*2){
+        if(enemy.body.x - enemy.target.x > -enemy.speed && enemy.body.x - enemy.target.x < enemy.speed){
             if(enemy.attackTimer < 1){
                 enemy.attackTimer += enemy.attackFreq;
                 enemy.attacking = true;
@@ -301,7 +301,7 @@ class Game extends Phaser.Scene {
             this.map = this.add.tilemap("tilemap_tiled", PPU, PPU, mapW, mapH);
             this.tileset = this.map.addTilesetImage("Dungeon Ruins Tileset Night", "tilemap_packed");
             this.cameras.main.setBackgroundColor("#94b8d6");
-            this.waitTimes = [50, 100, 10, 200, 10, 10];
+            this.waitTimes = [50, 100, 200, 10, 10];
             this.enemyTypes = ["f","f","f","f","f","m1"];
         }
         if(level == 2){
@@ -398,6 +398,7 @@ class Game extends Phaser.Scene {
 
         this.cameras.main.startFollow(my.sprite.player);
 
+        this.won = false;
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
             // Lose
             if(my.sprite.player.hp<1 || this.gems.length<1 ){
@@ -405,8 +406,10 @@ class Game extends Phaser.Scene {
             }
             // Win
             if(this.portals.length<1 && this.enemies.length<1){
+                console.log(level);
                 if(level == 1){
                     level = 2;
+                    this.scene.start('Game');
                 }else{
                     this.scene.start("Win");
                 }
@@ -439,8 +442,20 @@ class Game extends Phaser.Scene {
         // Win
         if(this.portals.length<1 && this.enemies.length<1){
             // this.cameras.main.fadeOut(1000, 255, 255, 255);
-            this.time.delayedCall(300,()=>this.scene.start("Win"));
-            
+            this.time.delayedCall(300,()=>{
+                if(!this.won){
+                    console.log(level);
+                    if(level == 1){
+                        level = 2;
+                        this.scene.start('Game');
+                    }else{
+                        this.scene.start("Win");
+                    }
+                    this.won = true;
+                }
+                
+                
+            });
         }
 
         this.updateHealthbar(my.sprite.player);
