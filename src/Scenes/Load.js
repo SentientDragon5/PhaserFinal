@@ -28,6 +28,9 @@ class Load extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+
+        // sound
+        this.load.audio('music', "wind-blowing-sfx-12809.mp3");
     }
 
     createAnim(character, anim, animName, frames,end=".png", loop=-1,frameStart=0,zeroPad=0){
